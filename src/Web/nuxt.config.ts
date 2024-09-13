@@ -9,6 +9,13 @@ export default defineNuxtConfig({
         cert: defaults.certFilePath,
         key: defaults.keyFilePath
     }
-}
-    
+},
+css: ['~/assets/css/main.css'],
+postcss: {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+},
+plugins: ["~/plugins/preline.client.ts"],  
 })

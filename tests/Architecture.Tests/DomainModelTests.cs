@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Ardalis.SmartEnum;
+using FluentAssertions;
 using NetArchTest.Rules;
 using Solar.Heliac.Architecture.UnitTests.Common;
 using Solar.Heliac.Domain.Common.Base;
@@ -23,6 +24,8 @@ public class DomainModelTests
         var domainModels = Types.InAssembly(typeof(AggregateRoot<>).Assembly)
             .That()
             .DoNotResideInNamespaceContaining("Common")
+            .And().DoNotInherit(typeof(SmartEnum<>))
+            .And().DoNotInherit(typeof(SmartEnum<,>))
             .And().DoNotHaveNameEndingWith("Id")
             .And().DoNotHaveNameEndingWith("Spec")
             .And().MeetCustomRule(new IsNotEnumRule());
@@ -36,7 +39,7 @@ public class DomainModelTests
             .Or().ImplementInterface(typeof(IValueObject));
 
         // Assert
-        result.GetResult().IsSuccessful.Should().BeTrue();
         result.GetResult().DumpFailingTypes(_outputHelper);
+        result.GetResult().IsSuccessful.Should().BeTrue();
     }
 }

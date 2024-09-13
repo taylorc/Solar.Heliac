@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SmartEnum.EFCore;
 using Solar.Heliac.Application.Common.Interfaces;
 using Solar.Heliac.Domain.Common.Interfaces;
 using Solar.Heliac.Domain.Heroes;
@@ -18,6 +19,7 @@ public class ApplicationDbContext(
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        modelBuilder.ConfigureSmartEnum();
 
         base.OnModelCreating(modelBuilder);
     }
