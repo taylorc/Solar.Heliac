@@ -37,4 +37,9 @@
     <ProjectReference Include="..\..\tools\Database\Database.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\Factories\" />
+    <Folder Include="Endpoints\" />
+  </ItemGroup>
+
 </Project>

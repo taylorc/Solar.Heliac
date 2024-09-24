@@ -43,11 +43,11 @@ public static class DependencyInjection
                 testQuery: async (ctx, ct) =>
                 {
                     // TODO: Replace the custom test query below with something appropriate for your project that is always expected to be valid
-                    _ = await ctx
-                        .Heroes
-                        // allows you to understand why you might see constant db queries in sql profile
-                        .TagWith("HealthCheck")
-                        .FirstOrDefaultAsync(ct);
+                    //_ = await ctx
+                    //    .Heroes
+                    //    // allows you to understand why you might see constant db queries in sql profile
+                    //    .TagWith("HealthCheck")
+                    //    .FirstOrDefaultAsync(ct);
 
                     return new DbHealthCheckResult("Database Context is healthy");
                 });

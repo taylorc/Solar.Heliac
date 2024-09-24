@@ -1,8 +1,6 @@
 using Solar.Heliac.Application;
 using Solar.Heliac.Infrastructure;
-using Solar.Heliac.Infrastructure.Persistence;
 using Solar.Heliac.WebApi;
-using Solar.Heliac.WebApi.Features;
 using Solar.Heliac.WebApi.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -52,8 +50,7 @@ app.UseSwaggerUi();
 app.UseRouting();
 
 app.UseDefaultExceptionHandler();
-app.MapHeroEndpoints();
-app.MapTeamEndpoints();
+
 
 app.Run();
 

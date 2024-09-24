@@ -1,13 +1,10 @@
 ﻿using Solar.Heliac.Domain.Contact;
 using Solar.Heliac.Domain.UnitTests.Testories;
-using System;
-using TUnit.Assertions.Extensions;
 using TUnit.Assertions.Extensions.Throws;
 
 namespace Solar.Heliac.Domain.UnitTests.Contacts;
 public class ContactTests
 {
-    private const string Phone = "0397821456";
 
     [Test]
     [Arguments("c8ad9974-ca93-44a5-9215-2f4d9e866c7a", "cc3431a8-4a31-4f76-af64-e8198279d7a4", false)]
@@ -30,12 +27,6 @@ public class ContactTests
             await Assert.That(id1.Value).IsEqualTo(guid1);
             await Assert.That(id2.Value).IsEqualTo(guid2);
         }
-
-
-        
-        //areEqual.Should().Be(isEqual);
-        //id1.Value.Should().Be(guid1);
-        //id2.Value.Should().Be(guid2);
     }
 
     [Test]
@@ -66,22 +57,9 @@ public class ContactTests
 
 
         }
-        //contact.Should().NotBeNull();
-        //contact.Email.Should().Be(fakeContact.Email);
-        //contact.FirstName.Should().Be(fakeContact.FirstName);
-        //contact.LastName.Should().Be(fakeContact.LastName);
-        //contact.Phone.Should().Be(Phone);
-        //contact.AddressLine1.Should().Be(fakeContact.AddressLine1);
-        //contact.AddressLine2.Should().Be(fakeContact.AddressLine2);
-        //contact.City.Should().Be(fakeContact.City);
-        //contact.PostCode.Should().Be(fakeContact.PostCode);
-        //contact.State.Should().Be(fakeContact.State);
-        //contact.ContactType.Should().Be(fakeContact.ContactType);
-
-        //contact.FullName.Should().Be($"{contact.FirstName} {contact.LastName}");
     }
 
-    
+
 
     [Test]
     [Arguments("Mia_Heller71@yahoo.com")]
@@ -152,7 +130,7 @@ public class ContactTests
             await Assert.That(() => act()).ThrowsException().With.Message.EqualTo("First Name cannot be a null value (Parameter 'firstName')");
         }
     }
-    
+
     [Test]
     public async Task Contact_IsNullLastName_ShouldNotSucceed()
     {
@@ -169,7 +147,7 @@ public class ContactTests
             await Assert.That(() => act()).ThrowsException().With.Message.EqualTo("Last Name cannot be a null value (Parameter 'lastName')");
         }
     }
-    
+
     [Test]
     public async Task Contact_IsNullPhone_ShouldNotSucceed()
     {
