@@ -11,12 +11,12 @@ public class Application : AggregateRoot<ApplicationId>
 
     }
 
-    public ApplicationStatus Status { get; set; }
-    public Contact.Contact Retailer { get; set; }
-    public Contact.Contact Applicant { get; set; }
-    public bool AcceptedTermsAndConditions { get; set; }
-    public decimal RebateAmount { get; set; }
-    public RebateType RebateType { get; set; }
+    public ApplicationStatus Status { get; private set; } = null!;
+    public Contact.Contact Retailer { get; private set; } = null!;
+    public Contact.Contact Applicant { get; private set; } = null!;
+    public bool AcceptedTermsAndConditions { get; private set; }
+    public decimal RebateAmount { get; private set; }
+    public RebateType RebateType { get; private set; } = null!;
 
     public static Application Create(ApplicationStatus applicationStatus, Contact.Contact retailer, Contact.Contact applicant, bool acceptedTermsAndConditions, decimal rebateAmount, RebateType rebateType)
     {
@@ -24,10 +24,10 @@ public class Application : AggregateRoot<ApplicationId>
 
         application.ChangeStatus(applicationStatus);
         application.AddRetailer(retailer);
-        application.AddApplication(applicant);
-        applicant.AddAcceptedTermsAndConditions(acceptedTermsAndConditions);
+        application.AddApplication(applicant);        
         application.AddRebateAmount(rebateAmount);
         application.AddRebateType(rebateType);
+        application.AddAcceptedTermsAndConditions(acceptedTermsAndConditions);
 
         return application;
     }
@@ -68,5 +68,10 @@ public class Application : AggregateRoot<ApplicationId>
             Guard.Against.InvalidInput(applicationStatus, nameof(ApplicationStatus), x => x.Value == Status.Value, "Application Status is the same as the current status");
 
         Status = applicationStatus;
+    }
+
+    public void AddAcceptedTermsAndConditions(bool acceptedTermsAndConditions)
+    {
+        AcceptedTermsAndConditions = acceptedTermsAndConditions;
     }
 }

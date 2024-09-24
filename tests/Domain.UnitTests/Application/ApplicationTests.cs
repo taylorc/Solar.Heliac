@@ -1,12 +1,12 @@
-﻿using Solar.Heliac.Domain.UnitTests.Factories;
+﻿using Solar.Heliac.Domain.UnitTests.Testories;
 
 namespace Solar.Heliac.Domain.UnitTests.Application;
 public class ApplicationTests
 {
-    [Theory]
-    [InlineData("c8ad9974-ca93-44a5-9215-2f4d9e866c7a", "cc3431a8-4a31-4f76-af64-e8198279d7a4", false)]
-    [InlineData("c8ad9974-ca93-44a5-9215-2f4d9e866c7a", "c8ad9974-ca93-44a5-9215-2f4d9e866c7a", true)]
-    public void ApplicationId_ShouldBeComparable(string stringGuid1, string stringGuid2, bool isEqual)
+    [Test]
+    [Arguments("c8ad9974-ca93-44a5-9215-2f4d9e866c7a", "cc3431a8-4a31-4f76-af64-e8198279d7a4", false)]
+    [Arguments("c8ad9974-ca93-44a5-9215-2f4d9e866c7a", "c8ad9974-ca93-44a5-9215-2f4d9e866c7a", true)]
+    public async Task ApplicationId_ShouldBeComparable(string stringGuid1, string stringGuid2, bool isEqual)
     {
         // Arrange
         Guid guid1 = Guid.Parse(stringGuid1);
@@ -17,25 +17,31 @@ public class ApplicationTests
         var areEqual = id1 == new Domain.Application.ApplicationId(guid2);
 
         // Assert
-        areEqual.Should().Be(isEqual);
-        id1.Value.Should().Be(guid1);
-        new Domain.Application.ApplicationId(guid2).Value.Should().Be(guid2);
+        // Assert
+        await using (Assert.Multiple())
+        {
+            await Assert.That(areEqual).IsEqualTo(isEqual);
+            await Assert.That(id1.Value).IsEqualTo(guid1);
+            await Assert.That(new Domain.Application.ApplicationId(guid2).Value).IsEqualTo(guid2);
+        }
     }
 
-    [Fact]
-    public void Create_WithValidValues_ShouldSucceed()
+    [Test]
+    public async Task Create_WithValidValues_ShouldSucceed()
     {
         // Act
-        var fakeApplication = ApplicationFactory.Build();
+        var fakeApplication = ApplicationTestory.Build();
 
         var application = Domain.Application.Application.Create(fakeApplication.Status, fakeApplication.Retailer, fakeApplication.Applicant, fakeApplication.AcceptedTermsAndConditions, fakeApplication.RebateAmount, fakeApplication.RebateType);
 
         // Assert
-        application.AcceptedTermsAndConditions.Should().Be(fakeApplication.AcceptedTermsAndConditions);
-        application.Applicant.Should().Be(fakeApplication.Applicant);
-        application.Status.Should().Be(fakeApplication.Status);
-        application.Retailer.Should().Be(fakeApplication.Retailer);
-        application.RebateAmount.Should().Be(fakeApplication.RebateAmount);
-        application.RebateType.Should().Be(fakeApplication.RebateType);
+        await using (Assert.Multiple())
+        {
+            await Assert.That(application.AcceptedTermsAndConditions).IsEqualTo(fakeApplication.AcceptedTermsAndConditions);
+            await Assert.That(application.Applicant).IsEqualTo(fakeApplication.Applicant);
+            await Assert.That(application.Status).IsEqualTo(fakeApplication.Status);
+            await Assert.That(application.Retailer).IsEqualTo(fakeApplication.Retailer);
+            await Assert.That(application.RebateAmount).IsEqualTo(fakeApplication.RebateAmount);
+        }
     }
 }

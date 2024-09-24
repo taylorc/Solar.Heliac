@@ -13,15 +13,14 @@ public class Contact : AggregateRoot<ContactId>
 
     public string Email { get; private set; } = null!;
     public string LastName { get; private set; } = null!;
-    public string FullName { get; private set; }
+    public string FullName { get; private set; } = null!;
     public string Phone { get; private set; } = null!;
     public string AddressLine1 { get; private set; } = null!;
     public string AddressLine2 { get; private set; } = null!;
     public string City { get; private set; } = null!;
     public StateType State { get; private set; } = null!;
     public string PostCode { get; private set; } = null!;
-    public ContactType ContactType { get; private set; }
-    public bool AcceptedTermsAndConditions { get; set; }
+    public ContactType? ContactType { get; private set; }
 
     public static Contact Create(string firstName, string lastName, string email, string phone, string addressLine1, string addressLine2, string city, string postCode, StateType state, ContactType contactType)
     {
@@ -38,7 +37,7 @@ public class Contact : AggregateRoot<ContactId>
 
     public void AddFirstName(string firstName)
     {
-        Guard.Against.NullOrEmpty(firstName, nameof(firstName));
+        Guard.Against.NullOrEmpty(firstName, nameof(firstName), message: "First Name cannot be a null value");
 
         FirstName = firstName;
 
@@ -55,7 +54,7 @@ public class Contact : AggregateRoot<ContactId>
 
     public void AddLastName(string lastName)
     {
-        Guard.Against.NullOrEmpty(lastName, nameof(lastName));
+        Guard.Against.NullOrEmpty(lastName, nameof(lastName), "Last Name cannot be a null value");
         LastName = lastName;
 
         if (!string.IsNullOrEmpty(FirstName))
@@ -66,7 +65,7 @@ public class Contact : AggregateRoot<ContactId>
 
     public void AddEmail(string email)
     {
-        Guard.Against.NullOrEmpty(email, nameof(email));
+        Guard.Against.NullOrEmpty(email, nameof(email), "Email cannot be a null value");
         Guard.Against.InvalidFormat(email, nameof(email), "(?:[a-zA-Z0-9!#$%&'*+\\/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+\\/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])", "Email is not valid");
 
         Email = email;
@@ -75,7 +74,7 @@ public class Contact : AggregateRoot<ContactId>
     public void AddPhone(string phone)
     {
         //(01) 05195606
-        Guard.Against.NullOrEmpty(phone, nameof(phone));
+        Guard.Against.NullOrEmpty(phone, nameof(phone), "Phone cannot be a null value");
         Guard.Against.InvalidFormat(phone, nameof(phone), "^(?:\\+?(61))? ?(?:\\((?=.*\\)))?(0?[2-57-8])\\)? ?(\\d\\d(?:[- ](?=\\d{3})|(?!\\d\\d[- ]?\\d[- ]))\\d\\d[- ]?\\d[- ]?\\d{3})$", "Phone is not valid");
 
         Phone = phone;
@@ -98,10 +97,5 @@ public class Contact : AggregateRoot<ContactId>
     public void AddContactType(ContactType contactType)
     {
         ContactType = contactType;
-    }
-
-    internal void AddAcceptedTermsAndConditions(bool acceptedTermsAndConditions)
-    {
-        AcceptedTermsAndConditions = acceptedTermsAndConditions;
     }
 }

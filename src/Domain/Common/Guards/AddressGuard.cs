@@ -1,10 +1,5 @@
 ﻿using Ardalis.GuardClauses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Solar.Heliac.Domain.Common.Guards;
 public static class AddressGuard
@@ -25,13 +20,12 @@ public static class AddressGuard
         if(validation.Any())
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Required input ");
             foreach (var item in validation)
             {
                 sb.Append($"{item} ");
             }
 
-            sb.AppendLine($"{wereWas} empty.");
+            sb.Append($"{wereWas} empty.");
 
             throw new ArgumentException(sb.ToString());
         }

@@ -1,8 +1,8 @@
 ﻿using Bogus;
 using Solar.Heliac.Domain.Contact;
 
-namespace Solar.Heliac.Domain.UnitTests.Factories;
-internal class ContactFactory
+namespace Solar.Heliac.Domain.UnitTests.Testories;
+internal class ContactTestory
 {
     public static Contact.Contact Build()
     {

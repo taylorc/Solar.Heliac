@@ -1,18 +1,18 @@
 ﻿
 using Bogus;
 
-namespace Solar.Heliac.Domain.UnitTests.Factories;
-internal class ApplicationFactory
+namespace Solar.Heliac.Domain.UnitTests.Testories;
+internal class ApplicationTestory
 {
     internal static Domain.Application.Application Build()
     {
         var rebateTypes = Domain.Application.RebateType.List;
         var applicationStatuses = Domain.Application.ApplicationStatus.List;
 
-        var applicant = ContactFactory.Build();
+        var applicant = ContactTestory.Build();
         applicant.AddContactType(Contact.ContactType.Customer);
 
-        var retailer = ContactFactory.Build();
+        var retailer = ContactTestory.Build();
         retailer.AddContactType(Contact.ContactType.Retailer);
 
         // Arrange

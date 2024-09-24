@@ -13,8 +13,8 @@ public class Installation : Entity<InstallationId>
 
     }
 
-    public Property Property { get; set; }
-    public Contact.Contact Installer { get; set; }
-    public Contact.Contact Owner { get; set; }
-    public InstallationStatus Status { get; set; }
+    public Property? Property { get; set; }
+    public Contact.Contact Installer { get; set; } = null!;
+    public Contact.Contact Owner { get; set; } = null!;
+    public InstallationStatus? Status { get; set; }
 }
